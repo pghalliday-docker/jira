@@ -32,7 +32,7 @@ RUN wget -q ${JIRA_URL} \
     && chown -R ${JIRA_USER}:${JIRA_GROUP} current/temp \
     && chown -R ${JIRA_USER}:${JIRA_GROUP} current/work
 
-USER ${JIRA_USER}
 WORKDIR ${JIRA_INSTALL_DIR}/current/bin
 EXPOSE 8080
-CMD ./start-jira.sh -fg
+CMD chown -R ${JIRA_USER}:${JIRA_GROUP} ${JIRA_HOME} \
+    && su ${JIRA_USER} -c "./start-jira.sh -fg"
