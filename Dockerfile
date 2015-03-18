@@ -19,7 +19,7 @@ RUN apt-get update \
 
 RUN mkdir -p ${ATLASSIAN_HOME} \
     && groupadd -r ${JIRA_GROUP} \
-    && useradd -r -m -g ${JIRA_GROUP} -d ${JIRA_HOME} ${JIRA_USER} \
+    && useradd -r -g ${JIRA_GROUP} -d ${JIRA_HOME} ${JIRA_USER} \
     && mkdir -p ${JIRA_INSTALL_DIR}
 
 WORKDIR ${JIRA_INSTALL_DIR}
@@ -34,6 +34,7 @@ RUN wget -q ${JIRA_URL} \
 
 COPY jira-server.xml /
 COPY docker-entrypoint.sh /
+VOLUME ${JIRA_HOME}
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 WORKDIR ${JIRA_INSTALL_DIR}/current/bin
