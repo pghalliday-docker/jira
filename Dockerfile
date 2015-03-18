@@ -32,7 +32,10 @@ RUN wget -q ${JIRA_URL} \
     && chown -R ${JIRA_USER}:${JIRA_GROUP} current/temp \
     && chown -R ${JIRA_USER}:${JIRA_GROUP} current/work
 
+COPY jira-server.xml /
+COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
 WORKDIR ${JIRA_INSTALL_DIR}/current/bin
 EXPOSE 8080
-CMD chown -R ${JIRA_USER}:${JIRA_GROUP} ${JIRA_HOME} \
-    && su ${JIRA_USER} -c "./start-jira.sh -fg"
+CMD ./start-jira.sh -fg
