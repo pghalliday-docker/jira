@@ -33,6 +33,8 @@ RUN wget -q ${JIRA_URL} \
     && chown -R ${JIRA_USER}:${JIRA_GROUP} current/work
 
 COPY jira-server.xml /
+COPY jira-seraph-config.xml /
+COPY jira-crowd.properties /
 COPY docker-entrypoint.sh /
 VOLUME ${JIRA_HOME}
 ENTRYPOINT ["/docker-entrypoint.sh"]
